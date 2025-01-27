@@ -30,23 +30,32 @@
     // When contact button is clicked after the form is filled out,
     // a modal confirming the submission will appear
     function DisplayContactPage() {
-        
+        console.log("Calling DisplayContactPage()...");
+
         // Updates nav bar to show current page
         let ContactNav = document.getElementById("ContactNav");
         ContactNav.setAttribute("class", "nav-link active");
         ContactNav.setAttribute("aria-current", "page");
 
+        let ContactForm = document.getElementById("ContactForm");
+        // Prevents form from submitting
+        ContactForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+        });
+
         const ConfirmationModal = document.getElementById('ConfirmationModal')
 
-        console.log("Calling DisplayContactPage()...");
         let ContactBtn = document.getElementById("ContactBtn");
+        console.log("Calling DisplayContactPage()...");
+        let ConfirmBtn = document.getElementById("ConfirmBtn");
         ContactBtn.addEventListener("click", function() {
-            ConfirmationModal.style.display = "block";
+            if (document.getElementById("name").value != "" && document.getElementById("email").value != "" && document.getElementById("subject").value != "") {
+                ConfirmationModal.style.display = "block";
+            } 
         });
 
         // Redirected after confirm button is clicked on contact form
-        let ConfirmBtn = document.getElementById("ConfirmBtn");
-        ConfirmBtn.preventDefault();
+        
         ConfirmBtn.addEventListener("click", function() {
             // Display "Thank You" message for 5 seconds before redirecting to Home Page
             const ThankYouMessage = document.createElement('div');
@@ -277,7 +286,7 @@
         // Footer
         let body = document.body;
         body.innerHTML += `
-        <footer class="footerBottom">
+        <footer class="footer">
             <hr>
             <div>
                 <div class="col text-center ">
