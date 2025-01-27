@@ -277,10 +277,10 @@
         // Footer
         let body = document.body;
         body.innerHTML += `
-        <footer>
+        <footer class="footerBottom">
             <hr>
             <div>
-                <div class="col text-center">
+                <div class="col text-center ">
                     <a href="privacyPolicy.html">Privacy Policy</a> | 
                     <a href="tos.html">Terms of Service</a>
                 </div>
