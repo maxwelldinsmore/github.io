@@ -30,6 +30,7 @@
     // When contact button is clicked after the form is filled out,
     // a modal confirming the submission will appear
     function DisplayContactPage() {
+        
         // Updates nav bar to show current page
         let ContactNav = document.getElementById("ContactNav");
         ContactNav.setAttribute("class", "nav-link active");
@@ -45,6 +46,7 @@
 
         // Redirected after confirm button is clicked on contact form
         let ConfirmBtn = document.getElementById("ConfirmBtn");
+        ConfirmBtn.preventDefault();
         ConfirmBtn.addEventListener("click", function() {
             // Display "Thank You" message for 5 seconds before redirecting to Home Page
             const ThankYouMessage = document.createElement('div');
