@@ -7,46 +7,55 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>About</title>
 
-    <link rel='stylesheet'  href='./content/app.css' />
+    <link rel='stylesheet'  href='./content/style.css' />
     <link rel='stylesheet'  href='./node_modules/bootstrap/dist/css/bootstrap.min.css' />
     <link rel='stylesheet'  href='./node_modules/@fortawesome/fontawesome-free/css/all.css' />
 
-
 </head>
 <body>
+  <!-- Navigation Bar -->
 <header>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="navbarNavDropdown">
               <li class="nav-item">
-                <a class="nav-link" href="index.html">Home</a>
+                <a class="nav-link" href="index.html" id="HomeNav">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="products.html"><i class="fa-solid fa-diagram-project"></i>Products</a>
+                <a class="nav-link" href="opportunities.html" id="OpportunitiesNav"><i class="fa-solid fa-diagram-project"></i>Opportunities</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link " href="services.html"><i class="fa-solid fa-signs-post"></i>Services</a>
+                <a class="nav-link" href="events.html" id="EventsNav"><i class="fa-solid fa-signs-post"></i>Events</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="about.html"><i class="fa-solid fa-circle-info"></i>About</a>
+                <a class="nav-link" href="about.html" id="AboutNav"><i class="fa-solid fa-circle-info"></i>About</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="contact.html"><i class="fa-solid fa-envelope"></i>Contact</a>
+                <a class="nav-link" href="contact-us.html" id="ContactNav"><i class="fa-solid fa-envelope"></i>Contact Us</a>
+              </li>
+            
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Learn More
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class=" dropdown-item" href="privacyPolicy.html">Privacy Policy</a></li>
+                  <li><a class="dropdown-item" href="tos.html">Terms of Service</a></li>
+                </ul>
               </li>
             </ul>
         </div>
       </nav>
 </header>
-<div class="container">
-  <h1>
-    Hi my Name is Max!
-  </h1>
 
-</div>
+
+
+
 
 <script src='./node_modules/bootstrap/dist/js/bootstrap.min.js'></script>
+<script src='./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js'></script>
 
-<script src='./scripts/app.js'></script>
+<script src='./scripts/main.js'></script>
 
 </body>
 </html>
