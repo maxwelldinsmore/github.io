@@ -14,7 +14,7 @@
      * 
      */
     function AddSampleData() {
-            fetch('./sampleData.json')
+            fetch('/sampleData.json')
         .then(response => response.json())
         .then(data => {
             // Load events into local storage
