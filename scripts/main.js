@@ -41,7 +41,7 @@
    * Dynamically loads the header bar from the header.html file
    */
     async function loadHeaderBar() {
-        return fetch("./tools/header.html")
+        return fetch("./Tools/header.html")
             .then(response => response.text())
             .then(data => {
                 document.querySelector('header').innerHTML = data;
