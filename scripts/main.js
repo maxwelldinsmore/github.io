@@ -14,7 +14,7 @@
      * 
      */
     function AddSampleData() {
-            fetch('../sampleData.json')
+            fetch('./sampleData.json')
         .then(response => response.json())
         .then(data => {
             // Load events into local storage
@@ -34,7 +34,6 @@
                 localStorage.setItem(`volunteer_${key}`, csvValue);
             }
         })
-        .catch(error => console.error('Error loading data:', error));
     }
 
    /**
