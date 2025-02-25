@@ -5,31 +5,65 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Home</title>
+    <title>Volunteer Connect</title>
 
-    <link rel='stylesheet'  href='./content/app.css' />
+    <link rel='stylesheet'  href='./content/style.css' />
     <link rel='stylesheet'  href='./node_modules/bootstrap/dist/css/bootstrap.min.css' />
     <link rel='stylesheet'  href='./node_modules/@fortawesome/fontawesome-free/css/all.css' />
 
 </head>
 <body>
-
+  <!-- Navigation Bar -->
 <header>
 </header>
 
-<main class="container">
-  <h1 class="mb-5">
-    <button id="AboutUsBtn" class="btn btn-primary">Welcome to our site</button>
-  </h1>
+<!-- Carousel with using copyright free photos found online -->
+<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
 
-  <div id="Weather" class="mt-5">
-    <h3>Weather Information</h3>
-    <p id="weather-data">Fetching weather data</p>
+  <div class="position-absolute w-100 p-2 align-items-center d-flex justify-content-center" 
+        style="top: 20px; z-index: 2;">
+    <h1 class="position-absolute text-center bg-white rounded p-2 volunteer-title">Volunteer Connect</h1>
   </div>
-</main>
+
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="./images/volunteer-image.jpg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="./images/gargabe-collection-image.jpg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="./images/landscaping-image.jpg" class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+<!-- Sign up button -->
+
+<div class=" text-center bg-white rounded p-2 volunteer-title">
+  <p>
+    Are you interested in volunteering? Volunteer Connect is a platform that connects volunteers with organizations that need help. <br>Click here to sign up!
+  </p>
+  <button id="SignUpBtn" name="SignUpBtn" type="button" class="btn btn-primary">Get Involved</button>
+</div>
 
 <script src='./node_modules/bootstrap/dist/js/bootstrap.min.js'></script>
-<script src='./scripts/app.js'></script>
+<script src='./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js'></script>
+<script src="./scripts/volunteer.js"></script>
+
+<script src='./scripts/main.js'></script>
 
 </body>
 </html>

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Contact Us</title>
+
+    <link rel='stylesheet'  href='./content/style.css' />
+    <link rel='stylesheet'  href='./node_modules/bootstrap/dist/css/bootstrap.min.css' />
+    <link rel='stylesheet'  href='./node_modules/@fortawesome/fontawesome-free/css/all.css' />
+    <script src="./scripts/authguard.js"></script>
+</head>
+<body>
+  <!-- Navigation Bar -->
+<header>
+</header>
+
+<!-- Contact Form -->
+<form id="ContactForm">
+  <div class="mb-3">
+    <label for="name" class="form-label">Name:</label>
+    <input class="form-control" id="name" type="text" placeholder="Enter your name" required>
+  </div>
+  <div class="mb-3">
+    <label for="email" class="form-label">Email address:</label>
+    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter your email" required>
+  </div>
+  <div class="mb-3">
+    <label for="subject" class="form-label">Subject:</label>
+    <input class="form-control" id="subject" type="text" placeholder="Subject line" required>
+  </div>  
+  <div class="mb-3">
+    <label for="message" class="form-label">Message:</label>
+    <textarea id="message" name="message" 
+      class="form-control" aria-describedby="Message Area" aria-label="Message Area" ></textarea>
+  </div>
+  <button id="ContactBtn" name="ContactBtn" type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<div class="mt-3">
+  Do you have any Suggestions or Feedback? Please let us know!
+  <br>
+  <a class="btn-secondary btn mt-2" href="./feedback.html">Feedback</a>
+</div>
+
+<!-- Modal -->
+<div class="modal" tabindex="-1" id="ConfirmationModal" name="ConfirmationModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" id="CloseBtn"class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure all your information is correct?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="CancelBtn" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" id="ConfirmBtn" class="btn btn-primary">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="./node_modules/jquery/dist/jquery.min.js"></script>
+<script src='./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js'></script>
+<script src="./scripts/volunteer.js"></script>
+
+<script src='./scripts/main.js'></script>
+
+</body>
+</html>
