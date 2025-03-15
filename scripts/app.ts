@@ -360,7 +360,7 @@ const router = new Router(routes);
 
                 if (confirm("Delete contact? Please confirm")) {
                     localStorage.removeItem((button as HTMLButtonElement).value);
-                    router.navigate("/contact-list");
+                    router.navigate("/contact");
                 }
             });
         });
