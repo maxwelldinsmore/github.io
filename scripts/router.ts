@@ -102,7 +102,7 @@ export class Router {
    /**
    * Dynamically loads the header bar from the header.html file
    */
-   export async function loadHeaderBar() {
+export async function loadHeaderBar() {
     return fetch("./views/components/header.html")        
         .then(response => response.text())
         .then(data => {
