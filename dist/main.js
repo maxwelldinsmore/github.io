@@ -47,10 +47,10 @@ import { DisplayFeedbackPage } from "./pageSpecific/feedback.js";
             // Load events into local storage
             for (const [key, value] of Object.entries(data.events)) {
                 // To prevent duplicate data
-                // if (localStorage.getItem(`event_${key}`)) {
-                //     console.log("[INFO] Event already exists in storage:", key);
-                //     continue;
-                // }
+                if (localStorage.getItem(`event_${key}`)) {
+                    console.log("[INFO] Event already exists in storage:", key);
+                    continue;
+                }
                 const event = new Event(value.eventName, value.eventDate, value.eventLocation, value.eventType, value.eventDescription, value.eventContact, value.volunteerPositions, value.volunteersSignedUp || []);
                 const eventData = event.serialize();
                 if (eventData) {
