@@ -1,6 +1,4 @@
 "use strict";
-// import path from 'path';
-import { loadHeaderBar } from './header.js';
 export class Router {
     routes;
     constructor(routes) {
@@ -30,10 +28,10 @@ export class Router {
             path = '/404';
             return;
         }
-        fetch(this.routes[basePath])
+        fetch(this.routes[basePath].SPAUrl)
             .then(response => {
             if (!response.ok)
-                throw new Error(`Unable to load route: ${this.routes[basePath]}`);
+                throw new Error(`Unable to load route: ${this.routes[basePath].SPAUrl}`);
             return response.text();
         })
             .then(html => {
@@ -46,9 +44,62 @@ export class Router {
             }
             // ensures header is reloaded every page change
             loadHeaderBar().then(() => {
+                this.updateActiveLink();
                 document.dispatchEvent(new CustomEvent('routeLoaded', { detail: basePath }));
             });
         })
             .catch(error => console.error("[ERROR] error loading page: ", error));
     }
+    /**
+     * Updates the active link with the active class
+     * Moved Into Router Class because it was easier to referenece
+     * the routes type
+    */
+    updateActiveLink() {
+        const currentPage = document.title.trim();
+        const path = location.hash.slice(1) || "/";
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach((link) => {
+            if (path === link.getAttribute('href')?.replace('#', '')) {
+                link.classList.add('active');
+                link.setAttribute("aria-current", "page");
+            }
+            else {
+                link.classList.remove('active');
+                link.removeAttribute("aria-current");
+            }
+        });
+    }
+}
+/**
+* Dynamically loads the header bar from the header.html file
+*/
+export async function loadHeaderBar() {
+    return fetch("./views/components/header.html")
+        .then(response => response.text())
+        .then(data => {
+        const headerElement = document.querySelector('header');
+        if (!headerElement) {
+            console.error("Header element not found.");
+            return;
+        }
+        headerElement.innerHTML = data;
+        if (sessionStorage.getItem("user")) {
+            const loginLink = document.getElementById('loginButton');
+            if (loginLink) {
+                loginLink.textContent = "Logout";
+                loginLink.addEventListener('click', () => {
+                    sessionStorage.removeItem("user");
+                    location.hash = "#/login-page";
+                });
+            }
+            // Adds create event and stats link to the header
+            let nav = document.getElementById('navbarNavDropdown');
+            if (nav) {
+                nav.insertAdjacentHTML('beforeend', '<a class="nav-link" href="#/createEvent">Create Event</a>');
+                nav.insertAdjacentHTML('beforeend', '<a class="nav-link" href="#/stats">Stats</a>');
+            }
+        }
+    })
+        .catch(error => { console.error("Unable to load header.", error); });
 }

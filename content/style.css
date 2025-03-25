@@ -1,0 +1,100 @@
+.volunteer-title {
+ top: 20px; z-index: 10; color: Black;
+}
+
+
+/* Month header */
+.month {
+ padding: 70px 25px;
+ width: 100%;
+ background: #1abc9c;
+ text-align: center;
+}
+
+/* Month list */
+.month ul {
+ margin: 0;
+ padding: 0;
+}
+
+.month ul li {
+ color: white;
+ font-size: 20px;
+ text-transform: uppercase;
+ letter-spacing: 4px;
+ list-style-type: none;
+}
+
+/* Previous button inside month header */
+.month .prev {
+ float: left;
+ padding-top: 10px;
+}
+
+/* Next button */
+.month .next {
+ float: right;
+ padding-top: 10px;
+}
+
+/* Weekdays (Mon-Sun) */
+.weekdays {
+ margin: 0;
+ padding: 10px 0;
+ background-color:#ddd;
+}
+
+.weekdays li {
+ display: inline-block;
+ width: 13.6%;
+ color: #666;
+ text-align: center;
+}
+
+/* Days (1-31) */
+.days {
+ padding: 30px 0;
+ background: #eee;
+ margin: 0;
+}
+
+.days li {
+ list-style-type: none;
+ display: inline-block;
+ width: 13.8%;
+ text-align: center;
+ margin-bottom: 5px;
+ font-size:12px;
+ color: #777;
+}
+
+/* Highlight the "current" day */
+.days li .active {
+ padding: 5px;
+ background: #1abc9c;
+ color: white !important
+}
+
+.filterEvents {
+ margin-bottom: 20px;
+}
+
+.hiddenMessage {
+ display: none;
+}
+
+/* Based off this https://stackoverflow.com/questions/62796071/bootstrap-footer-doesnt-stick-to-the-bottom-of-the-page*/
+html {
+ position: relative;
+ min-height: 100%;
+ padding-bottom:80px;
+}
+body {
+ margin-bottom: 80px;
+}
+footer {
+ position: absolute;
+ bottom: 0;
+ width: 100%;
+ height: 80px;
+}

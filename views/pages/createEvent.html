@@ -1,0 +1,37 @@
+<h1>Create an Event</h1>
+<form id="createEventForm" class="px-4">
+  <div class="mb-3">
+    <label for="eventName" class="form-label">Event Name:</label>
+    <input class="form-control" id="eventName" type="text" placeholder="Enter event name" required>
+  </div>
+  <div class="mb-3">
+    <label for="eventDate" class="form-label">Event Date:</label>
+    <input class="form-control" id="eventDate" type="date" required>
+  </div>
+  <div class="mb-3">
+    <label for="eventType" class="form-label">Event Type:</label>
+    <select class="form-control" id="eventType" required>
+      <option value="" disabled selected>Select event type</option>
+      <option value="Fundraiser">Fundraiser</option>
+      <option value="Workshop">Workshop</option>
+      <option value="Cleanup">Cleanup</option>
+    </select>
+  </div>
+  <div class="mb-3">
+    <label for="eventLocation" class="form-label">Event Location:</label>
+    <input class="form-control" id="eventLocation" type="text" placeholder="Enter event location" required>
+  </div>
+  <div class="mb-3">
+    <label for="eventDescription" class="form-label">Event Description:</label>
+    <textarea class="form-control" id="eventDescription" placeholder="Enter event description" required></textarea>
+  </div>
+  <div class="mb-3">
+    <label for="eventContact" class="form-label">Event Contact:</label>
+    <input class="form-control" id="eventContact" type="email" placeholder="Enter contact email" required>
+  </div>
+  <div class="mb-3">
+    <label for="volunteerPositions" class="form-label">Volunteer Positions:</label>
+    <input class="form-control" id="volunteerPositions" type="number" placeholder="Enter number of positions" required>
+  </div>
+  <button id="CreateEventBtn" type="submit" class="btn btn-primary">Create Event</button>
+</form>

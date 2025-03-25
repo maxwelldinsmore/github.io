@@ -2,7 +2,7 @@
     "compilerOptions": {
         "target": "ESNext",
         "module": "ESNext",
-        "moduleResolution": "node",
+        "moduleResolution": "Node",
         "outDir": "dist",
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
@@ -18,8 +18,9 @@
         "noImplicitThis": true,
         "alwaysStrict": true,
         "noImplicitReturns": true,
-        "resolveJsonModule": true
-
+        "resolveJsonModule": true,
+        "allowSyntheticDefaultImports": true
+        
     },
     "exclude": [
         "node_modules"
