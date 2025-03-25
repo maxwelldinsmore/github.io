@@ -1,5 +1,6 @@
 "use strict";
 import { Router } from "./router.js";
+import { getFromStorage } from "./utils.js";
 let sessionTimeout: ReturnType<typeof setTimeout>;
 
 function resetSessionTimeout() {
@@ -21,7 +22,7 @@ document.addEventListener("keypress", resetSessionTimeout);
 
 export function AuthGuard() {
     console.log("[AUTHGUARD] Checking whether user is logged in");
-    const user = sessionStorage.getItem("user");
+    const user = getFromStorage("user");
     const protectedRoutes = [
         "/contact-list",
         "/edit"

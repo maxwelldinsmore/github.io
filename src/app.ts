@@ -1,9 +1,4 @@
-interface PageTitles {
-    [key: string]: string;
-}
-interface Routes {
-    [key: string]: string;
-}
+
 
 //IIFE - Immediately Invoked Functional Expression
 "use strict";
@@ -12,6 +7,20 @@ import { Router } from "./router.js";
 import { loadFooterBar } from "./footer.js";
 import { AuthGuard } from "./authguard.js";
 import { Contact } from "./contact.js";
+import { VALIDATION_RULES, validateForm, addEventListenerOnce, 
+         attachValidationListener, DisplayWeather, AddContact, 
+         handleAddClick, handleCancelClick, handleEditClick, 
+         getFromStorage, deleteFromStorage,
+         saveToStorage
+       } from "./utils.js";
+import { get } from "http";
+
+interface PageTitles {
+    [key: string]: string;
+}
+interface Routes {
+    [key: string]: string;
+}
 
 const PageTitles: PageTitles = {
     "/": "Home",
@@ -44,194 +53,10 @@ const routes: Routes = {
 const router = new Router(routes);
 
 (function() {
-    function handleCancelClick() {
-        router.navigate("/contact-list");
-    }
-
-    function handleEditClick(event: Event, contact: any, page: string) {
-        event.preventDefault();
-
-        if (!validateForm()) {
-            alert("Form is invalid. Check the form");
-            return;
-        }
-
-        const fullName = (document.getElementById("fullName") as HTMLInputElement).value;
-        const contactNumber = (document.getElementById("contactNumber") as HTMLInputElement).value;
-        const emailAddress = (document.getElementById("emailAddress") as HTMLInputElement).value;
-
-        contact.fullName = fullName;
-        contact.contactNumber = contactNumber;
-        contact.emailAddress = emailAddress;
-
-        localStorage.setItem(page, contact.serialize());
-
-        router.navigate("/contact-list");
-    }
-
-    function handleAddClick(event: Event) {
-        event.preventDefault();
-
-        if (!validateForm()) {
-            console.error("Form is invalid. Cannot add contact");
-            return;
-        }
-
-        const fullName = (document.getElementById("fullName") as HTMLInputElement).value;
-        const contactNumber = (document.getElementById("contactNumber") as HTMLInputElement).value;
-        const emailAddress = (document.getElementById("emailAddress") as HTMLInputElement).value;
-
-        AddContact(fullName, contactNumber, emailAddress);
-
-        router.navigate("/contact-list");
-    }
-
-    function addEventListenerOnce(elementID: string, event: string, handler: EventListener) {
-        const element = document.getElementById(elementID);
-        if (element) {
-            element.removeEventListener(event, handler);
-            element.addEventListener(event, handler, { once: true });
-        } else {
-            console.warn(`[WARN] Element with ID '${elementID}' not found`);
-        }
-    }
-
-    function validateForm() {
-        return (
-            validateInput("fullName") &&
-            validateInput("contactNumber") &&
-            validateInput("emailAddress")
-        );
-    }
-
-    const VALIDATION_RULES: { [key: string]: { regex: RegExp; errorMessage: string } } = {
-        fullName: {
-            regex: /^[a-zA-Z\s]+$/,
-            errorMessage: "Full Name must contain only letters and spaces"
-        },
-        contactNumber: {
-            regex: /^\d{3}-\d{3}-\d{4}$/,
-            errorMessage: "Contact Number must be in the format 123-456-7890"
-        },
-        emailAddress: {
-            regex: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-            errorMessage: "Email Address must be in the format start@company.someurl i.e johndoe@gmail.com"
-        }
-    };
-
-    function validateInput(fieldID: string) {
-        const field = document.getElementById(fieldID) as HTMLInputElement;
-        const errorElement = document.getElementById(`${fieldID}-error`);
-        const rule = VALIDATION_RULES[fieldID];
-
-        if (!field || !errorElement || !rule) {
-            console.warn(`[WARN] Validation rule not found for ${fieldID}`);
-            return false;
-        }
-        if (field.value.trim() === "") {
-            errorElement.textContent = rule.errorMessage;
-            errorElement.style.display = "block";
-            return false;
-        }
-        if (!rule.regex.test(field.value)) {
-            errorElement.textContent = rule.errorMessage;
-            errorElement.style.display = "block";
-            return false;
-        }
-        errorElement.textContent = "";
-        errorElement.style.display = "none";
-        return true;
-    }
-
-    function attachValidationListener() {
-        console.log("Attaching validation listener to object");
-        Object.keys(VALIDATION_RULES).forEach((fieldID) => {
-            const field = document.getElementById(fieldID);
-            if (!field) {
-                console.warn(`[WARNING] Field '${fieldID}' not found. Skipping validation listener`);
-                return;
-            }
-            addEventListenerOnce("contactForm", "submit", (event) => {
-                if (!validateForm()) {
-                    event.preventDefault();
-                }
-            });
-        });
-    }
-
-    function AddContact(fullName: string, contactNumber: string, emailAddress: string) {
-        console.log("[DEBUG] AddContact() called");
-        if (!validateForm()) {
-            alert("Form contains errors. Cannot add contact");
-            return;
-        }
-        let contact = new Contact(
-            fullName,
-            contactNumber,
-            emailAddress
-        );
-        const SerializedContact = contact.serialize();
-        if (SerializedContact) {
-            let key = `contact_${Date.now()}`;
-            localStorage.setItem(key, SerializedContact);
-        } else {
-            console.error("[ERROR] Contact serialization failed");
-        }
-    }
-
-    async function DisplayWeather() {
-        const apiKey = "f67c8bf3435ac4efdc3f5ef9d5bf6500";
-        const city = "Oshawa";
-        const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-
-        try {
-            const response = await fetch(url);
-
-            if (!response.ok) {
-                throw new Error("Failed to fetch weather data from openweathermap.org");
-            }
-
-            const data = await response.json();
-            console.log("Weather API Response", data);
-
-            const weatherDataElement = document.getElementById("weather-data");
-            if (weatherDataElement === null) {
-                console.error("[Error)Element not found: weather-data");
-                return;
-            }
-            weatherDataElement.innerHTML = `<strong>City:</strong> ${data.name}<br>
-            <strong>Temperature: </strong> ${data.main.temp} <br>
-            <strong>Weather: </strong> ${data.weather[0].description} <br>`;
-        } catch (error) {
-            console.error("Error fetching weather data", error);
-            (document.getElementById("weather-data") as HTMLElement).innerHTML = "Unable to fetch weather data at the moment";
-        }
-    }
 
     function DisplayHomePage() {
         console.log("Calling DisplayHomePage()...");
-        const main = document.querySelector("main");
-        if (!main) {
-            console.error("[ERROR] Main element not found");
-            return;
-        }
-        main.innerHTML = "";
-        main.insertAdjacentHTML(
-            "beforeend",
-            `<button id="AboutUsBtn" class="btn btn-primary">About Us</button>
-            <div id="weather-data">Fetching weather data... </div>
-            
-            <div id="Weather" class="mt-5">
-                <h3>Weather Information</h3>
-                <p id="weather-data">Fetching weather data</p>
-            </div>
-
-            <p id="mainParagraph" class="mt-3">This is a simple paragraph</p>
-            <article class="container">
-                <p id="ArticleParagraph" class="mt-3">This is my article paragraph...</p>
-            </article>
-        `);
-
+        
         const AboutUsBtn = document.getElementById("AboutUsBtn");
         if (AboutUsBtn) {
             AboutUsBtn.addEventListener("click", () => {
@@ -239,7 +64,6 @@ const router = new Router(routes);
             });
         }
         
-
         DisplayWeather();
     }
 
@@ -276,7 +100,8 @@ const router = new Router(routes);
                 AddContact(
                     (document.getElementById("fullName") as HTMLInputElement).value,
                     (document.getElementById("contactNumber") as HTMLInputElement).value,
-                    (document.getElementById("emailAddress") as HTMLInputElement).value
+                    (document.getElementById("emailAddress") as HTMLInputElement).value,
+                    router
                 );
             }
             alert("Form submitted successfully");
@@ -304,39 +129,29 @@ const router = new Router(routes);
 
         for (const key of keys) {
             if (key.startsWith("contact_")) {
-                let contactData = localStorage.getItem(key);
+                let contactData = getFromStorage<Contact>(key);
 
-                if (!contactData) {
+                if (!contactData || contactData instanceof Contact === false) {
                     console.error("[ERROR] Contact data is null");
                     return;
                 } 
-                try {
-                    console.log(contactData);
-
-                    let contact = new Contact();
-                    contact.deserialize(contactData);
-                    data += `<tr>
-                    <th scope ="row" class="text-center"> 
-                            <td>${contact.fullName}</td> 
-                            <td>${contact.contactNumber}</td> 
-                            <td>${contact.emailAddress}</td> 
-                            <td>
-                                <button value="${key}" class="btn btn-warning btn-sm edit">
-                                <i class="fa-solid fa-user-pen"></i>Edit
-                                </button>                            
-                            </td>
-                            <td>
-                                <button value="${key}" class="btn btn-danger btn-sm delete">
-                                <i class="fa-solid fa-user-minus"></i>
-                                Delete</button>  
-                            </td>
-                        </th>
-                    </tr>`;
-                    
-                } catch (error) {
-                    console.error("Error: Contact data is invalid");
-                    return;
-                }
+                data += `<tr>
+                <th scope ="row" class="text-center"> 
+                        <td>${contactData.fullName}</td> 
+                        <td>${contactData.contactNumber}</td> 
+                        <td>${contactData.emailAddress}</td> 
+                        <td>
+                            <button value="${key}" class="btn btn-warning btn-sm edit">
+                            <i class="fa-solid fa-user-pen"></i>Edit
+                            </button>                            
+                        </td>
+                        <td>
+                            <button value="${key}" class="btn btn-danger btn-sm delete">
+                            <i class="fa-solid fa-user-minus"></i>
+                            Delete</button>  
+                        </td>
+                    </th>
+                </tr>`;
             }
         }
         contactList.innerHTML = data;
@@ -359,8 +174,8 @@ const router = new Router(routes);
                 }
 
                 if (confirm("Delete contact? Please confirm")) {
-                    localStorage.removeItem((button as HTMLButtonElement).value);
-                    router.navigate("/contact");
+                    deleteFromStorage((button as HTMLButtonElement).value);
+                    router.navigate("/contact-list");
                 }
             });
         });
@@ -395,23 +210,23 @@ const router = new Router(routes);
                 editButton.innerHTML = `<i class="fa-solid fa-user-pen"> Add Contact`;
                 editButton.classList.remove("btn-primary");
                 editButton.classList.add("btn-success");
-                addEventListenerOnce("cancelButton", "click", handleCancelClick);
-                addEventListenerOnce("editButton", "click", handleAddClick);
+                addEventListenerOnce("cancelButton", "click", (event) => handleCancelClick(router));
+                addEventListenerOnce("editButton", "click", (event) => handleAddClick(event, router));
             } 
         } else {
                 
                 console.log("DEBUG: Add page   ", page);
-                const contactData = localStorage.getItem(page);
-                let contact = new Contact();
-                if (contactData) {
-                    contact.deserialize(contactData);
-                    console.log(contact);
-                    console.log(contact + "   " + contactData);
+                const contactData = getFromStorage<Contact>(page);
+
+                if (contactData instanceof Contact === false) {
+                    console.log(contactData);
+                } else {
+                    (document.getElementById("fullName") as HTMLInputElement).value = contactData.fullName;
+                    (document.getElementById("contactNumber") as HTMLInputElement).value = contactData.contactNumber;
+                    (document.getElementById("emailAddress") as HTMLInputElement).value = contactData.emailAddress;
                 }
                 
-                (document.getElementById("fullName") as HTMLInputElement).value = contact.fullName;
-                (document.getElementById("contactNumber") as HTMLInputElement).value = contact.contactNumber;
-                (document.getElementById("emailAddress") as HTMLInputElement).value = contact.emailAddress;
+      
 
                 if (editButton) {
                     (editButton as HTMLButtonElement).innerHTML = `<i class="fa-solid fa-user-pen"> Edit Contact`;
@@ -420,10 +235,10 @@ const router = new Router(routes);
                 }
 
                 addEventListenerOnce("editButton", "click", (event) => {
-                    handleEditClick(event, contact, page);
+                    handleEditClick(event, contactData, page, router);
                 });
 
-                addEventListenerOnce("cancelButton", "click", handleCancelClick);
+                addEventListenerOnce("cancelButton", "click", () => handleCancelClick(router));
                 if (cancelButton) {
                     cancelButton.addEventListener("click", (event) => {
                         router.navigate("/contact-list");
@@ -437,7 +252,7 @@ const router = new Router(routes);
     function DisplayLoginPage() {
         console.log("DisplayLoginPage called...");
 
-        if (sessionStorage.getItem("user")) {
+        if (getFromStorage("user")) {
             router.navigate("/contact-list");
             return;
         }
@@ -479,21 +294,10 @@ const router = new Router(routes);
                     throw new Error(`Unable to load users.`);
                 }
                 let success = false;
-                let authenticateUser = null;
+                let authenticatedUser = users.find((user: any) => { user.Username === username && user.Password === password });
 
-                for (const user of users) {
-                    if (user.username === username && user.password === password) {
-                        success = true;
-                        authenticateUser = user;
-                        break;
-                    }
-                }
                 if (success) {
-                    sessionStorage.setItem("user", JSON.stringify({
-                        DisplayName: authenticateUser.displayName,
-                        EmailAddress: authenticateUser.emailAddress,
-                        Username: authenticateUser.username,
-                    }));
+                    saveToStorage("user", authenticatedUser);
                     messageArea.classList.remove("alert", "alert-danger");
                     messageArea.style.display = "none";
                     loadHeaderBar().then(() => {
