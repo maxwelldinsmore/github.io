@@ -7,13 +7,7 @@ const DB_NAME = process.env.MONGO_DB;
 const CLUSTER = process.env.CLUSTER_NAME;
 console.log(`[INFO] MongoDB connection string: mongodb+srv://${USER_NAME}:${PASSWORD}@${CLUSTER}/${DB_NAME}?retryWrites=true&w=majority&appName=cluster0`);
 //mongodb+srv://maxdinsmore:<db_password>@cluster0.umulu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
-const MONGO_URI = `mongodb+srv://${USER_NAME}:${PASSWORD}@${CLUSTER}/${DB_NAME}?retryWrites=true&w=majority&appName=cluster0&ssl=true&sslValidate=true`;
-const mongoOptions = {
-    ssl: true,
-    sslValidate: true,
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-};
+const MONGO_URI = `mongodb+srv://${USER_NAME}:${PASSWORD}@${CLUSTER}/${DB_NAME}?retryWrites=true&w=majority&appName=cluster0`;
 class Database {
     constructor() {
         this.db = null;
