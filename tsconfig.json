@@ -1,12 +1,13 @@
 {
     "compilerOptions": {
-        "target": "ESNext",
+        "target": "ES2021",
         "module": "ESNext",
-        "moduleResolution": "Node",
-        "outDir": "dist",
+        "moduleResolution": "node",
+        "outDir": "./dist",
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
         "strict": true,
+        "types": ["node"],
         "skipLibCheck": true,
         "sourceMap": false,
         "removeComments": false,
@@ -19,10 +20,15 @@
         "alwaysStrict": true,
         "noImplicitReturns": true,
         "resolveJsonModule": true,
-        "allowSyntheticDefaultImports": true
+        "rootDir": "./src",
         
+
+
     },
     "exclude": [
         "node_modules"
+    ],
+    "include": [
+        "src/**/*"
     ]
 }
