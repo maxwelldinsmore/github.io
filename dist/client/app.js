@@ -61,14 +61,14 @@ const router = new Router(routes);
             console.error("Send button or subscribe checkbox not found");
             return;
         }
-        sendButton.addEventListener("click", function (event) {
+        sendButton.addEventListener("click", async function (event) {
             event.preventDefault();
             if (!validateForm()) {
                 console.error("Form is invalid. Fix your errors before resubmitting");
                 return;
             }
             if (subscribeCheckbox.checked) {
-                AddContact(document.getElementById("fullName").value, document.getElementById("contactNumber").value, document.getElementById("emailAddress").value, router);
+                await AddContact(document.getElementById("fullName").value, document.getElementById("contactNumber").value, document.getElementById("emailAddress").value, router);
             }
             alert("Form submitted successfully");
         });

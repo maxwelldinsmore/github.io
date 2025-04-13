@@ -87,7 +87,7 @@ const router = new Router(routes);
             console.error("Send button or subscribe checkbox not found");
             return;
         }
-        sendButton.addEventListener("click", function(event) {
+        sendButton.addEventListener("click", async function(event) {
             event.preventDefault();
 
             if (!validateForm()) {
@@ -95,7 +95,7 @@ const router = new Router(routes);
                 return;
             }
             if (subscribeCheckbox.checked) {
-                AddContact(
+                await AddContact(
                     (document.getElementById("fullName") as HTMLInputElement).value,
                     (document.getElementById("contactNumber") as HTMLInputElement).value,
                     (document.getElementById("emailAddress") as HTMLInputElement).value,
